@@ -11,3 +11,18 @@
   width: 20px;
   height: 20px;
 }
+
+.enemy {
+  position: absolute;
+  background-color: yellow;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+.shot {
+  position: absolute;
+  background-color: black;
+  width: 20px;
+  height: 20px;
+}
