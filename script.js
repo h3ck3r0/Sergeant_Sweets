@@ -1,19 +1,20 @@
 var spielfeld = document.querySelector(".playground");
-
 var ghosthunter = document.querySelector(".player");
-
 let ghosthunterLook = document.querySelector(".player_look");
+var ghost = document.querySelectorAll(".ghost");
+let scoreText = document.querySelector(".score");
 
 var timer = new Timer(100);
+let sweetsTimer = new Timer(300);
 
-var ghost = document.querySelectorAll(".ghost");
+let score = 0;
 
 ghosthunter.style.left = "200px";
 ghosthunter.style.top = "200px";
 
 //map Ende
-const endLeft = 60;
-const endRight = 590;
+const endLeft = 70;
+const endRight = 660;
 const endTop = 150;
 const endBottom = 420;
 
@@ -149,6 +150,44 @@ function moveGhost() {
   }
 }
 
+function handleSweets(){
+
+  //collision
+  let sweets = document.querySelectorAll(".sweet");
+  for (let collision of allCollisions(ghosthunter, sweets))
+    if(collision.classList.contains("sweet")){
+      collision.remove();
+      score++;
+  }
+
+  //spawning
+  if(sweetsTimer.ready()){
+    let x = (Math.random() * (endRight-endLeft)) + endLeft;
+    let y = (Math.random() * (endBottom-endTop)) + endTop;
+
+    let srcSweets = [
+        "img/loli_orange-blue.png",
+        "img/loli_pink-green.png",
+        "img/candy_yellow.png",
+        "img/candy_pink.png",
+        "img/pumpkin.png"
+    ];
+
+    let sweet = document.createElement("img");
+    sweet.src = srcSweets[Math.round(Math.random()*4)];
+    sweet.height = 100;
+    sweet.width = 100;
+    sweet.style.left = x+"px";
+    sweet.style.top = y+"px";
+    sweet.classList.add("sweet");
+    spielfeld.appendChild(sweet);
+  }
+}
+
+function updateScore(){
+  scoreText.innerHTML = "Sweets: " + score;
+}
+
 function loop() {
   tastatursteuerung();
 
@@ -156,11 +195,15 @@ function loop() {
 
   //geometrie();
 
-  ballistik();
+  //ballistik();
 
   //hindernisse();
 
   //zeit();
+
+  handleSweets();
+
+  updateScore();
 
   window.requestAnimationFrame(loop);
 }
