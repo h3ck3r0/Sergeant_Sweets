@@ -6,16 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sergeant Sweets</title>
     <link href="style.css" rel="stylesheet" />
-    <script src="https://jsgame.bbz.cloud/scripts/v1/geometry.js"></script>
     <script src="https://jsgame.bbz.cloud/scripts/v1/mouse.js"></script>
     <script src="https://jsgame.bbz.cloud/scripts/v1/keyboard.js"></script>
     <script src="https://jsgame.bbz.cloud/scripts/v1/geometry.js"></script>
+    <script src="https://jsgame.bbz.cloud/scripts/v1/collision.js"></script>
+    <script src="https://jsgame.bbz.cloud/scripts/v1/timer.js"></script>
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="playground">
-      <div class="player"></div>
-      <div class="enemy">&uarr;</div>
+    <div class="page">
+      <div class="playground">
+        <img
+          src="/img/background.png"
+          alt="background"
+          width="100%"
+          height="100%"
+        />
+        <div class="player">
+          <img
+            src="/img/ghosthunter_left.jpg"
+            alt="ghosthunter_left"
+            width="100px"
+          />
+
+          <img
+            src="/img/ghosthunter_right.png"
+            alt="ghosthunter_right"
+            width="100px"
+          />
+        </div>
+      </div>
     </div>
   </body>
 </html>

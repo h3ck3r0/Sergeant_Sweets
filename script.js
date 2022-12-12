@@ -1,60 +1,84 @@
-var spieler = document.querySelector(".player");
-var gegner = document.querySelector(".enemy");
 var spielfeld = document.querySelector(".playground");
 
-spieler.style.left = "0px";
-spieler.style.top = "0px";
+var ghosthunter = document.querySelector(".player");
 
-gegner.style.left = "100px";
-gegner.style.top = "100px";
+var timer = new Timer(100);
+
+var ghost = document.querySelectorAll(".ghost");
+
+ghosthunter.style.left = "200px";
+ghosthunter.style.top = "200px";
 
 function tastatursteuerung() {
   if (keyboard(68)) {
-    spieler.style.left = parseInt(spieler.style.left) + 5 + "px";
+    ghosthunter.style.left = parseInt(ghosthunter.style.left) + 5 + "px";
   }
   if (keyboard(65)) {
-    spieler.style.left = parseInt(spieler.style.left) - 5 + "px";
+    ghosthunter.style.left = parseInt(ghosthunter.style.left) - 5 + "px";
   }
   if (keyboard(83)) {
-    spieler.style.top = parseInt(spieler.style.top) + 5 + "px";
+    ghosthunter.style.top = parseInt(ghosthunter.style.top) + 5 + "px";
   }
   if (keyboard(87)) {
-    spieler.style.top = parseInt(spieler.style.top) - 5 + "px";
+    ghosthunter.style.top = parseInt(ghosthunter.style.top) - 5 + "px";
+  }
+}
+
+function kollision() {
+  ghost = document.querySelectorAll(".ghost");
+  // Kommentar: sobald der ghosthunter mit ghost1 oder 2 kollidiert, ist das Spiel fertig
+  if (anyCollision(ghosthunter, ghost)) {
+    //alert("Game over!");
+    return;
+  }
+
+  // Kommentar: sobald der ghosthunter mit ghost3 oder 4 kollidiert, werden diese gelöscht
+  var collisions = allCollisions(ghosthunter, ghost);
+  // Kommentar: wir gehen durch alle Kollisionsobjekte durch und löschen sie
+  for (var collision of collisions) {
+    collision.parentNode.removeChild(collision);
   }
 }
 
 function geometrie() {
-  var spielerX = parseInt(spieler.style.left);
-  var spielerY = parseInt(spieler.style.top);
-  var gegnerX = parseInt(gegner.style.left);
-  var gegnerY = parseInt(gegner.style.left);
-
-  var dist = distance(spielerX, spielerY, gegnerX, gegnerY);
-  if (dist < 150) {
-    spieler.style.backgroundColor = "red";
-  } else {
-    spieler.style.backgroundColor = "green";
+  if (keyboard(39)) {
+    ghosthunter.style.left = parseInt(ghosthunter.style.left) + 5 + "px";
+  }
+  if (keyboard(37)) {
+    ghosthunter.style.left = parseInt(ghosthunter.style.left) - 5 + "px";
   }
 
-  var a = angle(gegnerX, gegnerY, spielerX, spielerY);
-  gegner.style.transform = "rotate(" + a + "deg)";
+  var ghosthunterX = parseInt(ghosthunter.style.left);
+  var ghosthunterY = parseInt(ghosthunter.style.top);
+  var ghostX = parseInt(ghosthunter.style.left);
+  var ghostY = parseInt(ghosthunter.style.left);
+
+  var dist = distance(ghosthunter, ghost);
+  if (dist < 150) {
+    ghosthunter.style.backgroundColor = "red";
+  } else {
+    ghosthunter.style.backgroundColor = "green";
+  }
+
+  var a = angle(ghost, ghosthunter);
+  ghost.style.transform = "rotate(" + a + "deg)";
 }
 
 function ballistik() {
   if (mouseClick()) {
-    var spielerX = parseInt(spieler.style.left);
-    var spielerY = parseInt(spieler.style.top);
-    var a = angle(
-      spielerX,
-      spielerY,
-      mousePositionX(spielfeld),
-      mousePositionY(spielfeld)
-    );
+    var ghosthunter = document.getElementById("ghosthunter");
+    var ghosthunterX = parseInt(ghosthunter.style.left);
+    var ghosthunterY = parseInt(ghosthunter.style.top);
+
+    var ghost = document.getElementById("ghost");
+    var ghostX = parseInt(ghost.style.left);
+    var ghostY = parseInt(ghost.style.top);
+    var a = angle(ghosthunterX, ghosthunterY, ghostX, ghostY);
 
     var schuss = document.createElement("div");
     schuss.classList.add("shot");
-    schuss.style.left = spieler.style.left;
-    schuss.style.top = spieler.style.top;
+    schuss.style.left = ghosthunterX + "px";
+    schuss.style.top = ghosthunterY + "px";
     schuss.setAttribute("data-angle", ((180 - a) * Math.PI) / 180);
     spielfeld.appendChild(schuss);
 
@@ -63,8 +87,10 @@ function ballistik() {
       var xPos = parseFloat(schuss.style.left);
       var yPos = parseFloat(schuss.style.top);
       var rotation = schuss.getAttribute("data-angle");
+
       schuss.style.left = 3 * Math.sin(rotation) + xPos + "px";
       schuss.style.top = 3 * Math.cos(rotation) + yPos + "px";
+
       if (
         parseInt(schuss.style.left) < 0 ||
         parseInt(schuss.style.left) > 400 ||
@@ -77,12 +103,50 @@ function ballistik() {
   }
 }
 
+function createGhost() {
+  if (timer.ready()) {
+    var h = document.createElement("div");
+    h.classList.add("ghost");
+    h.style.top = "0px";
+    h.style.left = "100px";
+    spielfeld.appendChild(h);
+  }
+}
+
+function disappearGhost() {
+  if (timer.ready()) {
+    ghosts = document.querySelectorAll(".ghost");
+    for (var ghost of ghosts) {
+      ghost.parentNode.removeChild(ghost);
+    }
+  }
+}
+
+function moveGhost() {
+  let posSplayerTop = ghosthunter.style.top;
+  let posSplayerLeft = ghosthunter.style.left;
+
+  if (timer.ready()) {
+    ghosts = document.querySelectorAll(".ghost");
+    for (var ghost of ghosts) {
+      ghost.style.left = 3 * Math.sin(rotation) + xPos + "px";
+      ghost.style.top = 3 * Math.cos(rotation) + yPos + "px";
+    }
+  }
+}
+
 function loop() {
   tastatursteuerung();
+
+  //kollision();
 
   //geometrie();
 
   ballistik();
+
+  //hindernisse();
+
+  //zeit();
 
   window.requestAnimationFrame(loop);
 }
