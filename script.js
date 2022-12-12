@@ -2,6 +2,8 @@ var spielfeld = document.querySelector(".playground");
 
 var ghosthunter = document.querySelector(".player");
 
+let ghosthunterLook = document.querySelector(".player_look");
+
 var timer = new Timer(100);
 
 var ghost = document.querySelectorAll(".ghost");
@@ -9,17 +11,29 @@ var ghost = document.querySelectorAll(".ghost");
 ghosthunter.style.left = "200px";
 ghosthunter.style.top = "200px";
 
+//map Ende
+const endLeft = 60;
+const endRight = 590;
+const endTop = 150;
+const endBottom = 420;
+
 function tastatursteuerung() {
-  if (keyboard(68)) {
+  // D
+  if (keyboard(68) && parseInt(ghosthunter.style.left) < endRight) {
     ghosthunter.style.left = parseInt(ghosthunter.style.left) + 5 + "px";
+    ghosthunterLook.src = "img/ghosthunter_right.png";
   }
-  if (keyboard(65)) {
+  // A
+  if (keyboard(65) && parseInt(ghosthunter.style.left) > endLeft) {
     ghosthunter.style.left = parseInt(ghosthunter.style.left) - 5 + "px";
+    ghosthunterLook.src = "img/ghosthunter_left.jpg";
   }
-  if (keyboard(83)) {
+  // S
+  if (keyboard(83) && parseInt(ghosthunter.style.top) < endBottom) {
     ghosthunter.style.top = parseInt(ghosthunter.style.top) + 5 + "px";
   }
-  if (keyboard(87)) {
+  // W
+  if (keyboard(87) && parseInt(ghosthunter.style.top) > endTop) {
     ghosthunter.style.top = parseInt(ghosthunter.style.top) - 5 + "px";
   }
 }
