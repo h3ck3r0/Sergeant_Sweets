@@ -1,5 +1,5 @@
-let music = new Audio('sound/background_music.mp3');
-let candySound = new Audio('sound/sound_candy_collection.wav');
+let music = new Audio("sound/background_music.mp3");
+let candySound = new Audio("sound/sound_candy_collection.wav");
 music.loop = true;
 
 var spielfeld = document.querySelector(".playground");
@@ -193,17 +193,17 @@ function updateScore() {
   scoreText.innerHTML = "Sweets: " + score;
 }
 
-function handleGhosts(){
+function handleGhosts() {
   //spawning
   if (ghostTimer.ready()) {
     let x = Math.random() * (endRight - endLeft) + endLeft;
     let y = Math.random() * (endBottom - endTop) + endTop;
 
     let ghost = document.createElement("img");
-    if(Math.random() < 1){
-      ghost.src = 'img/ghost_left.png';
-    }else {
-      ghost.src = 'img/ghost_right.png';
+    if (Math.random() < 1) {
+      ghost.src = "img/ghost_left.png";
+    } else {
+      ghost.src = "img/ghost_right.png";
     }
     ghost.style.height = "80px";
     ghost.style.width = "80px";
@@ -215,9 +215,7 @@ function handleGhosts(){
 }
 
 function loop() {
-
-  if(mouseClick())
-    music.play();
+  if (mouseClick()) music.play();
 
   tastatursteuerung();
 
