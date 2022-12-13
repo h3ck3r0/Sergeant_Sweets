@@ -1,19 +1,36 @@
-.page {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+  color: #e29b47;
+  font-family: bd-supper, sans-serif;
 }
 
 body {
   background-color: black;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .playground {
   position: relative;
   width: auto;
   height: 600px;
-  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  margin: auto;
 }
 
 .player {
@@ -31,13 +48,97 @@ body {
   position: absolute;
   width: 20px;
   height: 20px;
-  
 }
 
-.sweet{
- position: absolute;
+.sweet {
+  position: absolute;
 }
 
-h3{
-  color: white;
+.hearts {
+  display: flex;
+  justify-content: flex-start;
 }
+
+.heart {
+  padding-right: 10px;
+}
+
+.score {
+  font-size: 30px;
+}
+.life-score {
+  margin-top: 50px;
+}
+
+.button-menu {
+  display: flex;
+  justify-content: center;
+}
+/*Startmenu START*/
+
+.startmenu-background {
+  background-image: url(/img/startmenu-background_black.png);
+  margin: 100px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.button {
+  color: #e29b47;
+  background-color: #3a2e32;
+  border-radius: 40px;
+  border-style: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-family: bd-supper, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  display: inline-block;
+  font-size: 30px;
+  width: 200px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.button-start {
+  margin: 50px;
+}
+
+.button-menu {
+  margin: 50px;
+}
+
+/*Startmenu END*/
+
+/*Story START*/
+
+.story {
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 100px;
+}
+
+.button-back {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 30px;
+}
+
+/*Story END*/
+
+/*Game Over START*/
+
+.gameover-background {
+  background-image: url(/img/background_ghosts.png);
+}
+/*Game Over END*/

@@ -13,10 +13,10 @@ ghosthunter.style.left = "200px";
 ghosthunter.style.top = "200px";
 
 //map Ende
-const endLeft = 70;
-const endRight = 660;
+const endLeft = 0;
+const endRight = 750;
 const endTop = 150;
-const endBottom = 420;
+const endBottom = 485;
 
 function tastatursteuerung() {
   // D
@@ -150,41 +150,40 @@ function moveGhost() {
   }
 }
 
-function handleSweets(){
-
+function handleSweets() {
   //collision
   let sweets = document.querySelectorAll(".sweet");
   for (let collision of allCollisions(ghosthunter, sweets))
-    if(collision.classList.contains("sweet")){
+    if (collision.classList.contains("sweet")) {
       collision.remove();
       score++;
-  }
+    }
 
   //spawning
-  if(sweetsTimer.ready()){
-    let x = (Math.random() * (endRight-endLeft)) + endLeft;
-    let y = (Math.random() * (endBottom-endTop)) + endTop;
+  if (sweetsTimer.ready()) {
+    let x = Math.random() * (endRight - endLeft) + endLeft;
+    let y = Math.random() * (endBottom - endTop) + endTop;
 
     let srcSweets = [
-        "img/loli_orange-blue.png",
-        "img/loli_pink-green.png",
-        "img/candy_yellow.png",
-        "img/candy_pink.png",
-        "img/pumpkin.png"
+      "img/loli_orange-blue.png",
+      "img/loli_pink-green.png",
+      "img/candy_yellow.png",
+      "img/candy_pink.png",
+      "img/candy_cane.png",
     ];
 
     let sweet = document.createElement("img");
-    sweet.src = srcSweets[Math.round(Math.random()*4)];
-    sweet.height = 100;
-    sweet.width = 100;
-    sweet.style.left = x+"px";
-    sweet.style.top = y+"px";
+    sweet.src = srcSweets[Math.round(Math.random() * 4)];
+    sweet.height = 30;
+    sweet.width = 30;
+    sweet.style.left = x + "px";
+    sweet.style.top = y + "px";
     sweet.classList.add("sweet");
     spielfeld.appendChild(sweet);
   }
 }
 
-function updateScore(){
+function updateScore() {
   scoreText.innerHTML = "Sweets: " + score;
 }
 
