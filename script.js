@@ -1,3 +1,7 @@
+let music = new Audio('sound/background_music.mp3');
+let candySound = new Audio('sound/sound_candy_collection.wav');
+music.loop = true;
+
 var spielfeld = document.querySelector(".playground");
 var ghosthunter = document.querySelector(".player");
 let ghosthunterLook = document.querySelector(".player_look");
@@ -6,6 +10,7 @@ let scoreText = document.querySelector(".score");
 
 var timer = new Timer(100);
 let sweetsTimer = new Timer(300);
+let ghostTimer = new Timer(200);
 
 let score = 0;
 
@@ -122,7 +127,7 @@ function createGhost() {
   if (timer.ready()) {
     var h = document.createElement("div");
     h.classList.add("ghost");
-    h.style.top = "0px";
+    h.style.top = "100px";
     h.style.left = "100px";
     spielfeld.appendChild(h);
   }
@@ -157,6 +162,7 @@ function handleSweets() {
     if (collision.classList.contains("sweet")) {
       collision.remove();
       score++;
+      candySound.play();
     }
 
   //spawning
@@ -187,8 +193,35 @@ function updateScore() {
   scoreText.innerHTML = "Sweets: " + score;
 }
 
+function handleGhosts(){
+  //spawning
+  if (ghostTimer.ready()) {
+    let x = Math.random() * (endRight - endLeft) + endLeft;
+    let y = Math.random() * (endBottom - endTop) + endTop;
+
+    let ghost = document.createElement("img");
+    if(Math.random() < 1){
+      ghost.src = 'img/ghost_left.png';
+    }else {
+      ghost.src = 'img/ghost_right.png';
+    }
+    ghost.style.height = "80px";
+    ghost.style.width = "80px";
+    ghost.style.left = x + "px";
+    ghost.style.top = y + "px";
+    ghost.classList.add("ghost");
+    spielfeld.appendChild(ghost);
+  }
+}
+
 function loop() {
+
+  if(mouseClick())
+    music.play();
+
   tastatursteuerung();
+
+  handleGhosts();
 
   //kollision();
 

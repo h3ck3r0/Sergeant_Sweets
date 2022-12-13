@@ -77,7 +77,7 @@ body {
 /*Startmenu START*/
 
 .startmenu-background {
-  background-image: url(/img/startmenu-background_black.png);
+  background-image: url(img/startmenu-background_black.png);
   margin: 100px;
 }
 
@@ -139,6 +139,6 @@ body {
 /*Game Over START*/
 
 .gameover-background {
-  background-image: url(/img/background_ghosts.png);
+  background-image: url(img/background_ghosts.png);
 }
 /*Game Over END*/
