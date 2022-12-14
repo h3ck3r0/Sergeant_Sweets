@@ -1,5 +1,5 @@
 let music = new Audio("sound/background_music.mp3");
-let candySound = new Audio("sound/sound_candy_collection.wav");
+let candySound = new Audio("sound/sound_candy_collection.mp3");
 music.loop = true;
 
 var spielfeld = document.querySelector(".playground");
@@ -226,10 +226,6 @@ function loop() {
   //geometrie();
 
   //ballistik();
-
-  //hindernisse();
-
-  //zeit();
 
   handleSweets();
 

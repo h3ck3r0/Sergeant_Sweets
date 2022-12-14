@@ -122,10 +122,15 @@ body {
 
 /*Story START*/
 
+.manual {
+  width: 100%;
+  height: 100%;
+}
 .story {
   padding-left: 200px;
   padding-right: 200px;
   padding-top: 100px;
+  max-width: 1000px;
 }
 
 .button-back {

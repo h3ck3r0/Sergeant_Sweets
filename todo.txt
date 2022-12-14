@@ -1,0 +1,58 @@
+Browservorgaben:
+
+- [ ]   auf Mozilla Firefox, Google Chrome
+        am Notebook-Bildschirm kompatibel
+
+
+To Do:
+
+- [ ]  Gegner (ghosts) erscheinen und nähern sich zu dir aber verschwinden sobald angeschossen
+- [ ]  Schuss (shot) mit Maussteuerung kommt von Spieler (ghosthunter) und zielt auf Gegner (ghost)
+- [ ]  Game Over - Menu
+- [ ]  Leben degeneriert - kommt zu Game Over html
+- [ ]  Sound Effekte
+- [ ]  Gemüse erscheint und gibt minus Punkte
+- [x]  Items erscheinen (candy) und können eingesammelt werden -> geben Punkte
+- [x]  Menu vor Spiel mit Startfunktion
+- [x]  Musik
+
+
+
+Umsetzung - 50%
+1. [x]  Das Spiel basiert auf einer eigenen Idee und ist nicht einem Online-Tutorial
+        nachgemacht.
+
+2. [x]  Das Ziel des Spiels ist klar oder wird zu Beginn erklärt.
+
+3. [ ]  Mindestens drei der folgenden Komponenten sind eingebaut: Kollisionen,
+        Gravitation, Audio/Video, Gegner oder Hindernisse, Highscore-Liste, Spielstand speichern/laden.
+
+4. [x]  Der Punktestand ist ersichtlich.
+
+5. [ ]  Bei Misserfolg gibt es die Möglichkeit neu zu starten.
+
+6. [x]  Das Spiel kann mit der Maus oder der Tastatur (nach eurer Wahl) gesteuert
+        werden.
+
+
+
+Technisch - 50%
+1. [ ]  Der JavaScript-Code ist gültig und funktioniert.
+
+2. [ ]  Funktionen sind aussagekräftig benannt und der Name beschreibt, was die
+        Funktionen tun.
+        
+3. [ ]  Variablen sind aussagekräftig benannt und der Name beschreibt, was darin
+        gespeichert ist.
+
+4. [ ]  Der JavaScript-Code ist formatiert wie in den Beispielen aus dem Unterricht.
+
+5. [ ]  Es gib kein Dead-Code definiert.
+
+6. [ ]  Eingebundene Bilder sind korrekt dimensioniert (z.B. Bildschirm 1920x1080)
+
+7. [ ]  Eingebundene Medien (Bilder, Sounds, Videos) sind passend komprimiert.
+
+8. [ ]  Komplexe Funktionen und spezieller Code sind mittels Kommentaren erklärt.
+
+
