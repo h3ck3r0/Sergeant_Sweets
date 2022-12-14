@@ -11,7 +11,7 @@ let ghost = document.querySelectorAll(".ghost");
 let scoreText = document.querySelector(".score");
 
 let sweetsTimer = new Timer(300);
-let ghostTimer = new Timer(100);
+let ghostTimer = new Timer(200);
 
 ghosthunter.style.left = "200px";
 ghosthunter.style.top = "200px";
