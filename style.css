@@ -39,19 +39,24 @@ body {
 
 .shot {
   position: absolute;
-  background-color: yellow;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
+}
+
+.left{
+  transform: scaleX(-1);
 }
 
 .ghost {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 80px;
+  height: 80px;
 }
 
 .sweet {
   position: absolute;
+  height: 30px;
+  width: 30px;
 }
 
 .hearts {

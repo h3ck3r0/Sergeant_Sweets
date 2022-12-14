@@ -1,29 +1,31 @@
 let music = new Audio("sound/background_music.mp3");
 let candySound = new Audio("sound/sound_candy_collection.mp3");
+let damageSound = new Audio("sound/sound_damage.mp3");
 music.loop = true;
+music.volume = 0.7;
 
-var spielfeld = document.querySelector(".playground");
-var ghosthunter = document.querySelector(".player");
+let spielfeld = document.querySelector(".playground");
+let ghosthunter = document.querySelector(".player");
 let ghosthunterLook = document.querySelector(".player_look");
-var ghost = document.querySelectorAll(".ghost");
+let ghost = document.querySelectorAll(".ghost");
 let scoreText = document.querySelector(".score");
 
-var timer = new Timer(100);
 let sweetsTimer = new Timer(300);
-let ghostTimer = new Timer(200);
-
-let score = 0;
+let ghostTimer = new Timer(100);
 
 ghosthunter.style.left = "200px";
 ghosthunter.style.top = "200px";
 
-//map Ende
+let score = 0;
+let health = 2;
+
+//map end
 const endLeft = 0;
 const endRight = 750;
 const endTop = 150;
 const endBottom = 485;
 
-function tastatursteuerung() {
+function handleMovement() {
   // D
   if (keyboard(68) && parseInt(ghosthunter.style.left) < endRight) {
     ghosthunter.style.left = parseInt(ghosthunter.style.left) + 5 + "px";
@@ -44,126 +46,14 @@ function tastatursteuerung() {
   }
 }
 
-function kollision() {
-  ghost = document.querySelectorAll(".ghost");
-  // Kommentar: sobald der ghosthunter mit ghost1 oder 2 kollidiert, ist das Spiel fertig
-  if (anyCollision(ghosthunter, ghost)) {
-    //alert("Game over!");
-    return;
-  }
-
-  // Kommentar: sobald der ghosthunter mit ghost3 oder 4 kollidiert, werden diese gelöscht
-  var collisions = allCollisions(ghosthunter, ghost);
-  // Kommentar: wir gehen durch alle Kollisionsobjekte durch und löschen sie
-  for (var collision of collisions) {
-    collision.parentNode.removeChild(collision);
-  }
-}
-
-function geometrie() {
-  if (keyboard(39)) {
-    ghosthunter.style.left = parseInt(ghosthunter.style.left) + 5 + "px";
-  }
-  if (keyboard(37)) {
-    ghosthunter.style.left = parseInt(ghosthunter.style.left) - 5 + "px";
-  }
-
-  var ghosthunterX = parseInt(ghosthunter.style.left);
-  var ghosthunterY = parseInt(ghosthunter.style.top);
-  var ghostX = parseInt(ghosthunter.style.left);
-  var ghostY = parseInt(ghosthunter.style.left);
-
-  var dist = distance(ghosthunter, ghost);
-  if (dist < 150) {
-    ghosthunter.style.backgroundColor = "red";
-  } else {
-    ghosthunter.style.backgroundColor = "green";
-  }
-
-  var a = angle(ghost, ghosthunter);
-  ghost.style.transform = "rotate(" + a + "deg)";
-}
-
-function ballistik() {
-  if (mouseClick()) {
-    var ghosthunter = document.getElementById("ghosthunter");
-    var ghosthunterX = parseInt(ghosthunter.style.left);
-    var ghosthunterY = parseInt(ghosthunter.style.top);
-
-    var ghost = document.getElementById("ghost");
-    var ghostX = parseInt(ghost.style.left);
-    var ghostY = parseInt(ghost.style.top);
-    var a = angle(ghosthunterX, ghosthunterY, ghostX, ghostY);
-
-    var schuss = document.createElement("div");
-    schuss.classList.add("shot");
-    schuss.style.left = ghosthunterX + "px";
-    schuss.style.top = ghosthunterY + "px";
-    schuss.setAttribute("data-angle", ((180 - a) * Math.PI) / 180);
-    spielfeld.appendChild(schuss);
-
-    var schuesse = document.querySelectorAll(".shot");
-    for (var schuss of schuesse) {
-      var xPos = parseFloat(schuss.style.left);
-      var yPos = parseFloat(schuss.style.top);
-      var rotation = schuss.getAttribute("data-angle");
-
-      schuss.style.left = 3 * Math.sin(rotation) + xPos + "px";
-      schuss.style.top = 3 * Math.cos(rotation) + yPos + "px";
-
-      if (
-        parseInt(schuss.style.left) < 0 ||
-        parseInt(schuss.style.left) > 400 ||
-        parseInt(schuss.style.top) < 0 ||
-        parseInt(schuss.style.top) > 400
-      ) {
-        schuss.parentNode.removeChild(schuss);
-      }
-    }
-  }
-}
-
-function createGhost() {
-  if (timer.ready()) {
-    var h = document.createElement("div");
-    h.classList.add("ghost");
-    h.style.top = "100px";
-    h.style.left = "100px";
-    spielfeld.appendChild(h);
-  }
-}
-
-function disappearGhost() {
-  if (timer.ready()) {
-    ghosts = document.querySelectorAll(".ghost");
-    for (var ghost of ghosts) {
-      ghost.parentNode.removeChild(ghost);
-    }
-  }
-}
-
-function moveGhost() {
-  let posSplayerTop = ghosthunter.style.top;
-  let posSplayerLeft = ghosthunter.style.left;
-
-  if (timer.ready()) {
-    ghosts = document.querySelectorAll(".ghost");
-    for (var ghost of ghosts) {
-      ghost.style.left = 3 * Math.sin(rotation) + xPos + "px";
-      ghost.style.top = 3 * Math.cos(rotation) + yPos + "px";
-    }
-  }
-}
-
 function handleSweets() {
   //collision
   let sweets = document.querySelectorAll(".sweet");
-  for (let collision of allCollisions(ghosthunter, sweets))
-    if (collision.classList.contains("sweet")) {
-      collision.remove();
-      score++;
-      candySound.play();
-    }
+  for (let collision of allCollisions(ghosthunter, sweets)){
+    collision.remove();
+    score++;
+    candySound.play();
+  }
 
   //spawning
   if (sweetsTimer.ready()) {
@@ -180,8 +70,6 @@ function handleSweets() {
 
     let sweet = document.createElement("img");
     sweet.src = srcSweets[Math.round(Math.random() * 4)];
-    sweet.height = 30;
-    sweet.width = 30;
     sweet.style.left = x + "px";
     sweet.style.top = y + "px";
     sweet.classList.add("sweet");
@@ -189,15 +77,36 @@ function handleSweets() {
   }
 }
 
-function updateScore() {
+function updateDisplayScore() {
   scoreText.innerHTML = "Sweets: " + score;
 }
 
 function handleGhosts() {
+  let ghosts = document.querySelectorAll(".ghost");
+
   //spawning
+  let x, y;
   if (ghostTimer.ready()) {
-    let x = Math.random() * (endRight - endLeft) + endLeft;
-    let y = Math.random() * (endBottom - endTop) + endTop;
+    switch (Math.round(Math.random()*2)){
+
+      //spawn on left side
+      case 0:
+        x = endLeft;
+        y = Math.random() * (endBottom - endTop) + endTop;
+        break;
+
+      //spawn on right side
+      case 1:
+        x = endRight;
+        y = Math.random() * (endBottom - endTop) + endTop;
+        break;
+
+      //spawn at bottom
+      case 2:
+        x = Math.random() * (endRight - endLeft) + endLeft;
+        y = endBottom;
+        break;
+    }
 
     let ghost = document.createElement("img");
     if (Math.random() < 1) {
@@ -205,32 +114,107 @@ function handleGhosts() {
     } else {
       ghost.src = "img/ghost_right.png";
     }
-    ghost.style.height = "80px";
-    ghost.style.width = "80px";
     ghost.style.left = x + "px";
     ghost.style.top = y + "px";
     ghost.classList.add("ghost");
     spielfeld.appendChild(ghost);
   }
+
+  //movement
+  let playerX = parseInt(ghosthunter.style.left);
+  let playerY = parseInt(ghosthunter.style.top);
+
+  for(let ghost of ghosts){
+    let ghostX = parseInt(ghost.style.left);
+    let ghostY = parseInt(ghost.style.top);
+
+    //movement on X axis
+    if(Math.abs(playerX - ghostX) > 50){
+      if(playerX > ghostX)
+        ghost.style.left = ghostX + 2 + "px";
+      else
+        ghost.style.left = ghostX - 2 + "px";
+    }
+
+    //movement on Y axis
+    if(Math.abs(playerY - ghostY) > 50){
+      if(playerY > ghostY)
+        ghost.style.top = ghostY + 2 + "px";
+      else
+        ghost.style.top = ghostY - 2 + "px";
+    }
+  }
+
+  //collision
+  for (let collision of allCollisions(ghosthunter, ghosts)) {
+    collision.remove();
+    takeDamage();
+  }
+}
+
+function takeDamage(){
+  damageSound.play();
+  health--;
+
+  let heart = document.querySelector(".heart"+health);
+  heart.src = "img/heart_empty.png";
+
+  if(health <= 0){
+    damageSound.addEventListener("ended", function (){
+      window.location.href = "gameover.html";
+    });
+  }
+}
+
+function handleShots(){
+  let shots = document.querySelectorAll(".shot");
+  let ghosts = document.querySelectorAll(".ghost");
+
+  //spawning
+  if(mouseClick()/*&& shots.length < 2*/){
+    let shot = document.createElement("img");
+    shot.src = "img/schuss.png";
+    shot.style.left = ghosthunter.style.left;
+    shot.style.top = parseInt(ghosthunter.style.top) + 20 + "px";
+    shot.classList.add("shot");
+
+    if(ghosthunterLook.src.includes("right")){
+      shot.classList.add("right");
+      shot.style.left = parseInt(ghosthunter.style.left) + 60 + "px";
+    }else{
+      shot.classList.add("left");
+    }
+    spielfeld.appendChild(shot);
+  }
+
+  //movement
+  for(let shot of shots){
+    if(shot.classList.contains("right"))
+      shot.style.left = parseInt(shot.style.left) + 15 + "px";
+    else
+      shot.style.left = parseInt(shot.style.left) - 15 + "px";
+
+    if(parseInt(shot.style.left) < endLeft || parseInt(shot.style.left) > endRight)
+      shot.remove();
+  }
+
+  //collision
+  for(let shot of shots){
+    for (let collision of allCollisions(shot, ghosts)) {
+      collision.remove();
+    }
+  }
 }
 
 function loop() {
-  if (mouseClick()) music.play();
 
-  tastatursteuerung();
-
+  handleMovement();
   handleGhosts();
-
-  //kollision();
-
-  //geometrie();
-
-  //ballistik();
-
+  handleShots();
   handleSweets();
+  updateDisplayScore();
 
-  updateScore();
-
+  music.play();
   window.requestAnimationFrame(loop);
 }
 
