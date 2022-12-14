@@ -139,9 +139,9 @@ function handleGhosts() {
     //movement on Y axis
     if(Math.abs(playerY - ghostY) > 50){
       if(playerY > ghostY)
-        ghost.style.top = ghostY + 2 + "px";
+        ghost.style.top = ghostY + 1 + "px";
       else
-        ghost.style.top = ghostY - 2 + "px";
+        ghost.style.top = ghostY - 1 + "px";
     }
   }
 
