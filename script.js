@@ -1,6 +1,8 @@
 let music = new Audio("sound/background_music.mp3");
 let candySound = new Audio("sound/sound_candy_collection.mp3");
 let damageSound = new Audio("sound/sound_damage.mp3");
+let victorySound = new Audio("sound/sound_victory.wav");
+let gameOverSound = new Audio("sound/sound_game_over.wav");
 music.loop = true;
 music.volume = 0.7;
 
@@ -77,8 +79,14 @@ function handleSweets() {
   }
 }
 
-function updateDisplayScore() {
+function updateScore() {
   scoreText.innerHTML = "Sweets: " + score;
+  if(score >= 10){
+    victorySound.play();
+    victorySound.addEventListener("ended", function (){
+      window.location.href = "victory.html";
+    });
+  }
 }
 
 function handleGhosts() {
@@ -160,7 +168,8 @@ function takeDamage(){
   heart.src = "img/heart_empty.png";
 
   if(health <= 0){
-    damageSound.addEventListener("ended", function (){
+    gameOverSound.play();
+    gameOverSound.addEventListener("ended", function (){
       window.location.href = "gameover.html";
     });
   }
@@ -172,6 +181,7 @@ function handleShots(){
 
   //spawning
   if(mouseClick()/*&& shots.length < 2*/){
+    new Audio("sound/sound_shooting.mp3").play();
     let shot = document.createElement("img");
     shot.src = "img/schuss.png";
     shot.style.left = ghosthunter.style.left;
@@ -212,7 +222,7 @@ function loop() {
   handleGhosts();
   handleShots();
   handleSweets();
-  updateDisplayScore();
+  updateScore();
 
   music.play();
   window.requestAnimationFrame(loop);
