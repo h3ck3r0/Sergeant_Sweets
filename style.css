@@ -43,7 +43,7 @@ body {
   height: 40px;
 }
 
-.left{
+.left {
   transform: scaleX(-1);
 }
 
@@ -125,7 +125,7 @@ body {
 
 /*Startmenu END*/
 
-/*Story START*/
+/*Manual START*/
 
 .manual {
   width: 100%;
@@ -134,7 +134,7 @@ body {
 .story {
   padding-left: 200px;
   padding-right: 200px;
-  padding-top: 100px;
+  padding-top: 50px;
   max-width: 1000px;
 }
 
@@ -144,7 +144,7 @@ body {
   margin-top: 30px;
 }
 
-/*Story END*/
+/*Manual END*/
 
 /*Game Over START*/
 
@@ -152,3 +152,10 @@ body {
   background-image: url(img/background_ghosts.png);
 }
 /*Game Over END*/
+
+/*Victory START*/
+.victory-background {
+  background-image: url(img/victory_background.png);
+}
+
+/*Victory END*/
