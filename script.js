@@ -51,7 +51,7 @@ function handleMovement() {
 function handleSweets() {
   //collision
   let sweets = document.querySelectorAll(".sweet");
-  for (let collision of allCollisions(ghosthunter, sweets)){
+  for (let collision of allCollisions(ghosthunter, sweets)) {
     collision.remove();
     score++;
     candySound.play();
@@ -81,9 +81,9 @@ function handleSweets() {
 
 function updateScore() {
   scoreText.innerHTML = "Sweets: " + score;
-  if(score >= 10){
+  if (score >= 10) {
     victorySound.play();
-    victorySound.addEventListener("ended", function (){
+    victorySound.addEventListener("ended", function () {
       window.location.href = "victory.html";
     });
   }
@@ -95,8 +95,7 @@ function handleGhosts() {
   //spawning
   let x, y;
   if (ghostTimer.ready()) {
-    switch (Math.round(Math.random()*2)){
-
+    switch (Math.round(Math.random() * 2)) {
       //spawn on left side
       case 0:
         x = endLeft;
@@ -132,24 +131,20 @@ function handleGhosts() {
   let playerX = parseInt(ghosthunter.style.left);
   let playerY = parseInt(ghosthunter.style.top);
 
-  for(let ghost of ghosts){
+  for (let ghost of ghosts) {
     let ghostX = parseInt(ghost.style.left);
     let ghostY = parseInt(ghost.style.top);
 
     //movement on X axis
-    if(Math.abs(playerX - ghostX) > 50){
-      if(playerX > ghostX)
-        ghost.style.left = ghostX + 2 + "px";
-      else
-        ghost.style.left = ghostX - 2 + "px";
+    if (Math.abs(playerX - ghostX) > 50) {
+      if (playerX > ghostX) ghost.style.left = ghostX + 2 + "px";
+      else ghost.style.left = ghostX - 2 + "px";
     }
 
     //movement on Y axis
-    if(Math.abs(playerY - ghostY) > 50){
-      if(playerY > ghostY)
-        ghost.style.top = ghostY + 1 + "px";
-      else
-        ghost.style.top = ghostY - 1 + "px";
+    if (Math.abs(playerY - ghostY) > 50) {
+      if (playerY > ghostY) ghost.style.top = ghostY + 1 + "px";
+      else ghost.style.top = ghostY - 1 + "px";
     }
   }
 
@@ -160,27 +155,27 @@ function handleGhosts() {
   }
 }
 
-function takeDamage(){
+function takeDamage() {
   damageSound.play();
   health--;
 
-  let heart = document.querySelector(".heart"+health);
+  let heart = document.querySelector(".heart" + health);
   heart.src = "img/heart_empty.png";
 
-  if(health <= 0){
+  if (health <= 0) {
     gameOverSound.play();
-    gameOverSound.addEventListener("ended", function (){
+    gameOverSound.addEventListener("ended", function () {
       window.location.href = "gameover.html";
     });
   }
 }
 
-function handleShots(){
+function handleShots() {
   let shots = document.querySelectorAll(".shot");
   let ghosts = document.querySelectorAll(".ghost");
 
   //spawning
-  if(mouseClick()/*&& shots.length < 2*/){
+  if (mouseClick() /*&& shots.length < 2*/) {
     new Audio("sound/sound_shooting.mp3").play();
     let shot = document.createElement("img");
     shot.src = "img/schuss.png";
@@ -188,28 +183,30 @@ function handleShots(){
     shot.style.top = parseInt(ghosthunter.style.top) + 20 + "px";
     shot.classList.add("shot");
 
-    if(ghosthunterLook.src.includes("right")){
+    if (ghosthunterLook.src.includes("right")) {
       shot.classList.add("right");
       shot.style.left = parseInt(ghosthunter.style.left) + 60 + "px";
-    }else{
+    } else {
       shot.classList.add("left");
     }
     spielfeld.appendChild(shot);
   }
 
   //movement
-  for(let shot of shots){
-    if(shot.classList.contains("right"))
+  for (let shot of shots) {
+    if (shot.classList.contains("right"))
       shot.style.left = parseInt(shot.style.left) + 15 + "px";
-    else
-      shot.style.left = parseInt(shot.style.left) - 15 + "px";
+    else shot.style.left = parseInt(shot.style.left) - 15 + "px";
 
-    if(parseInt(shot.style.left) < endLeft || parseInt(shot.style.left) > endRight)
+    if (
+      parseInt(shot.style.left) < endLeft ||
+      parseInt(shot.style.left) > endRight
+    )
       shot.remove();
   }
 
   //collision
-  for(let shot of shots){
+  for (let shot of shots) {
     for (let collision of allCollisions(shot, ghosts)) {
       collision.remove();
     }
@@ -217,7 +214,6 @@ function handleShots(){
 }
 
 function loop() {
-
   handleMovement();
   handleGhosts();
   handleShots();
